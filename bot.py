@@ -3,7 +3,22 @@ import requests, json, os, subprocess
 TOKEN = os.environ["BOT_TOKEN"]
 BASE = f"https://api.telegram.org/bot{TOKEN}"
 
-INSTA_URL = os.getenv("INSTA_URL")
+raw_input = os.getenv("INSTA_URL")
+
+INSTA_URL = None
+
+if raw_input:
+    try:
+        # Try parsing as JSON (Pipedream case)
+        data = json.loads(raw_input)
+
+        INSTA_URL = (
+            data.get("message", {})
+                .get("text")
+        )
+    except Exception:
+        # Fallback: treat as plain URL string
+        INSTA_URL = raw_input
 DEFAULT_CHAT_ID = os.getenv("CHAT_ID")
 
 
