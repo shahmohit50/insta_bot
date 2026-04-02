@@ -7,6 +7,11 @@ on:
   schedule:
     - cron: "*/15 * * * *"
   workflow_dispatch:
+      inputs:
+        insta_url:
+          description: "Instagram URL"
+          required: false
+          type: string
 
 jobs:
   bot:
@@ -28,6 +33,7 @@ jobs:
         run: python bot.py
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          INSTA_URL: ${{ github.event.inputs.insta_url }}
 
       - name: Commit state safely
         run: |
