@@ -17,8 +17,15 @@ def send_video(chat_id, path):
     )
 
 # Load state
-state = json.load(open("state.json"))
-processed = json.load(open("processed.json"))
+if os.path.exists("state.json"):
+    state = json.load(open("state.json"))
+else:
+    state = {"last_update_id": 0}
+
+if os.path.exists("processed.json"):
+    processed = json.load(open("processed.json"))
+else:
+    processed = {"handled_updates": []}
 
 offset = state.get("last_update_id", 0)
 handled = set(processed.get("handled_updates", []))
