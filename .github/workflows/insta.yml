@@ -37,3 +37,11 @@ jobs:
           git commit -m "update bot state" || echo "no changes"
           git pull --rebase
           git push
+
+      - name: Cleanup old runs
+        uses: peter-evans/delete-workflow-runs@v2
+        with:
+          workflow_id: Telegram Insta Bot
+          retain-days: 0       # optional, delete older than 0 days
+          retain-last: 10      # keep last 10 runs
+          token: ${{ secrets.GITHUB_TOKEN }}
